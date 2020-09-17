@@ -1,9 +1,8 @@
-import 'package:dr_app/Screens/dashbord.dart';
 import 'package:dr_app/Screens/login_screen.dart';
+import 'package:dr_app/Screens/professional_details_screen.dart';
 import 'package:dr_app/Widgets/registration_form.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static const routeName = 'registration';
@@ -17,8 +16,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   bool _isLoad = false;
 
   void _submit(String email, String password) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    
     try {
       setState(() {
         _isLoad = true;
@@ -28,7 +25,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       setState(() {
         _isLoad = false;
       });
-      Navigator.of(context).pushReplacementNamed(Dashbord.routeName);
+      Navigator.of(context)
+          .pushReplacementNamed(ProfessionalDetailsScreen.roteName);
       print(userCredential.user.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {

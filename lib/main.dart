@@ -1,15 +1,22 @@
+import 'package:dr_app/Helpers/degree.dart';
+import 'package:dr_app/Helpers/hospital_lavel.dart';
 import 'package:dr_app/Screens/dashbord.dart';
 import 'package:dr_app/Screens/login_screen.dart';
+import 'package:dr_app/Screens/personal_details.dart';
 import 'package:dr_app/Screens/professional_details_screen.dart';
 import 'package:dr_app/Screens/registration_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider.value(value: Degree()),
+    ChangeNotifierProvider.value(value: HospitalLavelProvider()),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -38,6 +45,7 @@ class MyApp extends StatelessWidget {
         Dashbord.routeName: (context) => Dashbord(),
         ProfessionalDetailsScreen.roteName: (context) =>
             ProfessionalDetailsScreen(),
+        PersonalDetails.routeName: (context) => PersonalDetails(),
       },
     );
   }

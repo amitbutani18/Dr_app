@@ -1,3 +1,4 @@
+import 'package:dr_app/Screens/dashbord.dart';
 import 'package:dr_app/Screens/registration_screen.dart';
 import 'package:dr_app/Widgets/login_form.dart';
 import 'package:flutter/material.dart';
@@ -22,17 +23,24 @@ class _LoginScreenState extends State<LoginScreen> {
       });
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      // Navigator.of(context).pushReplacementNamed(Dashbord.routeName);
       setState(() {
         _isLoad = false;
       });
       print(userCredential.user.uid);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
+        setState(() {
+          _isLoad = false;
+        });
         _scaffoldKey.currentState.showSnackBar(SnackBar(
             backgroundColor: Color.fromRGBO(108, 99, 255, 0.8),
             content: Text('No user found for that email.')));
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
+        setState(() {
+          _isLoad = false;
+        });
         print('Wrong password provided for that user.');
       }
     }

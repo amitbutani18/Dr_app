@@ -1,6 +1,7 @@
 import 'package:dr_app/Screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Dashbord extends StatefulWidget {
   static const routeName = 'dashbord';
@@ -12,17 +13,17 @@ class _DashbordState extends State<Dashbord> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('DashBord'),
-          actions: [
-            IconButton(
-                icon: Icon(Icons.exit_to_app),
-                onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                  // Navigator.of(context).pushNamed(LoginScreen.routeName);
-                })
-          ],
+      body: Center(
+        child: Container(
+          child: RaisedButton(
+            child: Text('SignOut'),
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.of(context).pushReplacementNamed('/');
+            },
+          ),
         ),
-        body: Container());
+      ),
+    );
   }
 }
